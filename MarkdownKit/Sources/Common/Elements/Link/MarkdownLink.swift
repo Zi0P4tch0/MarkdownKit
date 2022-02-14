@@ -42,7 +42,12 @@ open class MarkdownLink: MarkdownLinkElement {
 
     guard let encodedLink = fullLink.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
     guard let url = URL(string: fullLink) ?? URL(string: encodedLink) else { return }
+
     attributedString.addAttribute(NSAttributedString.Key.link, value: url, range: range)
+    if let color = color {
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+    }
+
   }
 
   open func match(_ match: NSTextCheckingResult, attributedString: NSMutableAttributedString) {
