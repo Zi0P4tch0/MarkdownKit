@@ -31,14 +31,8 @@ open class MarkdownLink: MarkdownLinkElement {
   }
 
   open func formatText(_ attributedString: NSMutableAttributedString, range: NSRange, link: String) {
-    let regex = try? NSRegularExpression(pattern: schemeRegex, options: .caseInsensitive)
-    let hasScheme = regex?.firstMatch(
-        in: link,
-        options: .anchored,
-        range: NSRange(0..<link.count)
-    ) != nil
 
-    let fullLink = hasScheme ? link : "\(defaultScheme ?? "https://")\(link)"
+    let fullLink = link
 
     guard let encodedLink = fullLink.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
     guard let url = URL(string: fullLink) ?? URL(string: encodedLink) else { return }
